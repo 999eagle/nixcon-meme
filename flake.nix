@@ -27,18 +27,20 @@
           fira-go
         ];
 
-        buildPhase = ''
+        buildPhase = let
+          fontCommands = "-backgorund transparent -fill black -font '${pkgs.fira-go}/share/fonts/opentype/FiraGO-Medium.otf'";
+        in ''
           mkdir -p build cache
           export XDG_CACHE_HOME="cache"
           qrencode ${nixpkgs.lib.escapeShellArg link} -o build/qr.png -s 10 -l Q
           magick \
             -size 1920x1080 xc:white \
             \( img/template.jpg -resize 1920x1080 -geometry +200+0 \) -composite \
-            \( -background transparent -fill black -font "${pkgs.fira-go}/share/fonts/opentype/FiraGO-Medium.otf" -pointsize 48 label:'Making memes imperatively' -geometry +800+250 \) -composite \
-             \( -background transparent -fill black -font "${pkgs.fira-go}/share/fonts/opentype/FiraGO-Medium.otf" -pointsize 48 label:'Building a flake that \noutputs a meme' -geometry +800+750 \) -composite \
-             \( build/qr.png -geometry +1510+530 \) -composite \
-             \( -background transparent -fill black -font "${pkgs.fira-go}/share/fonts/opentype/FiraGO-Medium.otf" -pointsize 32 label:'Source code:\nhttps://github.com/999eagle/nixcon-meme' -geometry +1100+940 \) -composite \
-             build/out.jpg
+            \( ${fontCommands} -pointsize 48 label:'Making memes imperatively' -geometry +800+250 \) -composite \
+            \( ${fontCommands} -pointsize 48 label:'Building a flake that \noutputs a meme' -geometry +800+750 \) -composite \
+            \( build/qr.png -geometry +1510+530 \) -composite \
+            \( ${fontCommands} -pointsize 32 label:'Source code:\nhttps://github.com/999eagle/nixcon-meme' -geometry +1100+940 \) -composite \
+            build/out.jpg
         '';
 
         installPhase = ''
