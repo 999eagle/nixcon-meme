@@ -27,7 +27,7 @@
         ];
 
         buildPhase = let
-          fontCommands = "-backgorund transparent -fill black -font '${pkgs.fira-go}/share/fonts/opentype/FiraGO-Medium.otf'";
+          fontCommands = "-background transparent -fill black -font '${pkgs.fira-go}/share/fonts/opentype/FiraGO-Medium.otf'";
         in ''
           mkdir -p build cache
           export XDG_CACHE_HOME="cache"
